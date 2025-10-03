@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSMS - Tamil Stock Market Strategies</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+  html { scroll-behavior: smooth; }
+  body {
+    background:url('Frame 128.png') no-repeat center center/cover;
+    min-height:100vh;
+    color:#fff;
+    overflow-x:hidden;
+  }
+  body::before {
+    content:""; position:fixed; inset:0;
+    background:rgba(0,0,0,0.55); z-index:-1;
+  }
+
+  /* Header */
+  header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:15px 20px; background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(15px); border-bottom:1px solid rgba(135,206,250,0.4);
+    position:sticky; top:0; z-index:1000; border-radius:0 0 20px 20px;
+  }
+  header img { width:40px; height:40px; margin-right:10px; border-radius:50%; }
+  header h1 { font-size:1.3rem; font-weight:600; color:skyblue; }
+
+  /* Hamburger button */
+  .menu-btn {
+    width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:5px; cursor:pointer; border-radius:12px;
+    background:rgba(255,255,255,0.1); backdrop-filter:blur(12px);
+    border:1px solid rgba(135,206,250,0.4); transition:0.3s;
+  }
+  .menu-btn:hover { transform: scale(1.1); }
+  .menu-btn div { width:20px; height:2px; background:white; border-radius:2px; transition:0.3s; }
+  .menu-btn.active div:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .menu-btn.active div:nth-child(2) { opacity:0; }
+  .menu-btn.active div:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+  /* Side menu */
+  .side-menu {
+    position:fixed; top:0; right:-70%; width:70%; height:100%;
+    background:rgba(0,0,0,0.85); backdrop-filter:blur(15px);
+    border-left:1px solid rgba(135,206,250,0.4); padding:60px 20px;
+    transition:right 0.4s ease; z-index:2000; display:flex; flex-direction:column; gap:20px;
+  }
+  .side-menu.active { right:0; }
+  .side-menu a {
+    text-decoration:none; font-size:1.1rem; color:white;
+    padding:12px; border-radius:12px; background:rgba(255,255,255,0.1);
+    border:1px solid rgba(135,206,250,0.4); transition:0.3s;
+  }
+  .side-menu a:hover { background:rgba(135,206,250,0.3); transform: translateX(5px); }
+
+  /* Container & cards */
+  .container { padding:20px; display:flex; flex-direction:column; gap:25px; }
+  .card {
+    background:rgba(255, 255, 255, 0.1);
+    border:1px solid rgba(135, 206, 250, 0.4);
+    border-radius:18px; padding:20px; backdrop-filter:blur(15px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    opacity:0; transform:translateY(40px); transition:all 0.6s ease;
+    cursor:default;
+  }
+  .card.show { opacity:1; transform:translateY(0);}
+  .card:hover { transform:scale(1.03); box-shadow:0 12px 25px rgba(0,0,0,0.5); }
+
+  .card h2 { font-size:1.2rem; margin-bottom:12px; color:skyblue; }
+  .review { margin:10px 0; font-size:0.95rem; padding:12px;
+    border-radius:12px; background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.15);
+    transition:0.3s;
+  }
+  .review:hover { background:rgba(135,206,250,0.2); transform:scale(1.02); }
+
+  /* Telegram button card */
+  .telegram-card { text-align:center; }
+  .telegram-btn {
+    display:inline-block; margin-top:15px; padding:12px 25px;
+    border-radius:50px; background: rgba(135,206,250,0.3);
+    color:white; font-weight:600; text-decoration:none;
+    border:1px solid rgba(135,206,250,0.6); backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+  }
+  .telegram-btn:hover {
+    background: rgba(135,206,250,0.6); transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  }
+
+  /* Footer */
+  footer {
+    text-align:center; padding:25px 15px; background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(15px); border-top:1px solid rgba(135,206,250,0.4);
+    font-size:0.9rem; border-radius:18px 18px 0 0; margin-top:30px;
+  }
+  footer a { color:skyblue; text-decoration:none; font-weight:600;}
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;">
+    <img src="Frame 125.png" alt="TSMS Logo">
+    <h1>TSMS</h1>
+  </div>
+  <div class="menu-btn" id="menuBtn">
+    <div></div><div></div><div></div>
+  </div>
+</header>
+
+<!-- Side Menu -->
+<nav class="side-menu" id="sideMenu">
+  <a href="#about">About</a>
+  <a href="#telegram">Community</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#why">Contact</a>
+</nav>
+
+<div class="container">
+  <!-- About Us Card -->
+  <div class="card" id="about">
+    <h2>About Us</h2>
+    <p>We only teach <strong>stock market strategies</strong> of trading. Our focus is 100% on strategies, not basic theory.</p>
+  </div>
+
+  <!-- Telegram Card -->
+  <div class="card telegram-card" id="telegram">
+    <h2>Join Our Community</h2>
+    <p>Click the button below to join our Telegram group and stay updated with the latest stock market strategies.</p>
+    <a href="https://t.me/yourTelegramID" target="_blank" class="telegram-btn">Join Telegram Group</a>
+  </div>
+
+  <!-- Reviews Card -->
+  <div class="card" id="reviews">
+    <h2>What Our Learners Say</h2>
+    <div class="review">⭐⭐⭐⭐⭐ "Best place to learn strategies!"</div>
+    <div class="review">⭐⭐⭐⭐ "Very clear teaching, easy to understand."</div>
+    <div class="review">⭐⭐⭐⭐⭐ "Helped me grow as a trader."</div>
+  </div>
+
+  <!-- Why Choose TSMS Card -->
+  <div class="card" id="why">
+    <h2>Why Choose TSMS?</h2>
+    <p>✔️ Strategy-first approach <br> ✔️ Beginner-friendly <br> ✔️ Proven results</p>
+  </div>
+</div>
+
+<footer>
+  <p>📩 Telegram: <a href="https://t.me/yourTelegramID">@yourTelegramID</a></p>
+  <p>📞 +91 98765 43210</p>
+</footer>
+
+<script>
+  // Hamburger toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const sideMenu = document.getElementById('sideMenu');
+  const menuLinks = sideMenu.querySelectorAll('a');
+
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('active');
+    sideMenu.classList.toggle('active');
+  });
+
+  // Close menu when link is clicked
+  menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      sideMenu.classList.remove('active');
+      menuBtn.classList.remove('active');
+    });
+  });
+
+  // Scroll animation
+  const cards = document.querySelectorAll('.card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+      }
+    });
+  }, {threshold:0.2});
+  cards.forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>
