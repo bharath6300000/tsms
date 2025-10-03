@@ -9,15 +9,17 @@
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
   html { scroll-behavior: smooth; }
   body {
-    background:url('Frame 128.png') no-repeat center center/cover;
-    min-height:100vh;
-    color:#fff;
-    overflow-x:hidden;
-  }
-  body::before {
-    content:""; position:fixed; inset:0;
-    background:rgba(0,0,0,0.55); z-index:-1;
-  }
+    background: url('Frame 128.png') no-repeat center center/cover;
+    background-attachment: fixed; /* FIXED BACKGROUND */
+    min-height: 100vh;
+    color: #fff;
+    overflow-x: hidden;
+    /* Optional for smoother rendering */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 
   /* Header */
   header {
